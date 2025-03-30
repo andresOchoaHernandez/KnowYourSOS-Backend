@@ -1,0 +1,12 @@
+[submodule "KnowYourSOS-ApiGateway"]
+	path = KnowYourSOS-ApiGateway
+	url = git@github.com:andresOchoaHernandez/KnowYourSOS-ApiGateway.git
+[submodule "KnowYourSOS-ConfigurationServer"]
+	path = KnowYourSOS-ConfigurationServer
+	url = git@github.com:andresOchoaHernandez/KnowYourSOS-ConfigurationServer.git
+[submodule "KnowYourSOS-EurekaServer"]
+	path = KnowYourSOS-EurekaServer
+	url = git@github.com:andresOchoaHernandez/KnowYourSOS-EurekaServer.git
+[submodule "KnowYourSOS-SOSNumberMicroservice"]
+	path = KnowYourSOS-SOSNumberMicroservice
+	url = git@github.com:andresOchoaHernandez/KnowYourSOS-SOSNumberMicroservice.git
