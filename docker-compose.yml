@@ -1,0 +1,68 @@
+services:
+  knowyoursos-configurationserver:
+    build:
+        context: ./KnowYourSOS-ConfigurationServer
+        dockerfile: ../Dockerfile
+        args:
+          SERVICE_NAME: ConfigurationServer
+    ports:
+        - "8888:8888"
+    container_name: knowyoursos-configurationserver
+    networks:
+      - backend
+    
+  knowyoursos-eurekaserver:
+    build:
+      context: ./KnowYourSOS-EurekaServer
+      dockerfile: ../Dockerfile
+      args:
+        SERVICE_NAME: EurekaServer
+    ports:
+        - "8761:8761"
+    container_name: knowyoursos-eurekaserver
+    depends_on:
+      - knowyoursos-configurationserver
+    networks:
+      - backend
+  knowyoursos-apigateway:
+    build:
+      context: ./KnowYourSOS-ApiGateway
+      dockerfile: ../Dockerfile
+      args:
+        SERVICE_NAME: UpdateDBMicroservice
+    ports:
+        - "8222:8222"
+    container_name: knowyoursos-apigateway
+    depends_on:
+      - knowyoursos-eurekaserver
+    networks:
+      - backend
+  knowyoursos-sosnumbermicroservice:
+    build:
+      context: ./KnowYourSOS-SOSNumberMicroservice
+      dockerfile: ../Dockerfile
+      args:
+        SERVICE_NAME: UpdateDBMicroservice
+    ports:
+        - "8090:8090"
+    container_name: knowyoursos-sosnumbermicroservice
+    depends_on:
+      - knowyoursos-eurekaserver
+    networks:
+      - backend
+  knowyoursos-updatedbmicroservice:
+    build:
+      context: ./KnowYourSOS-UpdateDBMicroservice
+      dockerfile: ../Dockerfile
+      args:
+        SERVICE_NAME: UpdateDBMicroservice
+    ports:
+        - "8091:8091"
+    container_name: knowyoursos-updatedbmicroservice
+    depends_on:
+      - knowyoursos-eurekaserver
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
