@@ -10,3 +10,6 @@
 [submodule "KnowYourSOS-SOSNumberMicroservice"]
 	path = KnowYourSOS-SOSNumberMicroservice
 	url = git@github.com:andresOchoaHernandez/KnowYourSOS-SOSNumberMicroservice.git
+[submodule "KnowYourSOS-UpdateDBMicroservice"]
+	path = KnowYourSOS-UpdateDBMicroservice
+	url = git@github.com:andresOchoaHernandez/KnowYourSOS-UpdateDBMicroservice.git
