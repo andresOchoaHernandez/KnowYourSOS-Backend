@@ -5,20 +5,15 @@ services:
         dockerfile: ../Dockerfile
         args:
           SERVICE_NAME: ConfigurationServer
-    ports:
-        - "8888:8888"
     container_name: knowyoursos-configurationserver
     networks:
       - backend
-    
   knowyoursos-eurekaserver:
     build:
       context: ./KnowYourSOS-EurekaServer
       dockerfile: ../Dockerfile
       args:
         SERVICE_NAME: EurekaServer
-    ports:
-        - "8761:8761"
     container_name: knowyoursos-eurekaserver
     depends_on:
       - knowyoursos-configurationserver
@@ -30,9 +25,9 @@ services:
       dockerfile: ../Dockerfile
       args:
         SERVICE_NAME: UpdateDBMicroservice
-    ports:
-        - "8222:8222"
     container_name: knowyoursos-apigateway
+    ports:
+          - "8222:8222"
     depends_on:
       - knowyoursos-eurekaserver
     networks:
@@ -43,8 +38,6 @@ services:
       dockerfile: ../Dockerfile
       args:
         SERVICE_NAME: UpdateDBMicroservice
-    ports:
-        - "8090:8090"
     container_name: knowyoursos-sosnumbermicroservice
     depends_on:
       - knowyoursos-eurekaserver
@@ -56,8 +49,6 @@ services:
       dockerfile: ../Dockerfile
       args:
         SERVICE_NAME: UpdateDBMicroservice
-    ports:
-        - "8091:8091"
     container_name: knowyoursos-updatedbmicroservice
     depends_on:
       - knowyoursos-eurekaserver
