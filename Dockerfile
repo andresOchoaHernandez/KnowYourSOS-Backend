@@ -3,6 +3,9 @@ FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 ARG SERVICE_NAME
 
+# Install netcat, needed by the "wait-for-it" script
+RUN apt-get update && apt-get install -y netcat
+
 # Set working directory
 WORKDIR /KnowYourSOS-${SERVICE_NAME}
 
