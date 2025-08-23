@@ -20,7 +20,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 
 # Clean the old build and package the application
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Copy the script to wait for the service specified as
 # an environment variable in the doker-compose file.
@@ -30,9 +30,8 @@ COPY  waitForService.sh* .
 
 # Render the file executable only if it's not the configuration server 
 RUN if [ ${SERVICE_NAME} != "ConfigurationServer" ]; then \
-      echo "$SERVICE_NAME"; \
       chmod +x waitForService.sh; \
     fi
 
 # Run the application
-ENTRYPOINT [ "sh", "-c", "./waitForService.sh ${SERVICE_TO_WAIT_FOR}" ]
+CMD [ "sh", "-c", "if [ \"${SERVICE_TO_WAIT_FOR}\" != \"None\" ]; then ./waitForService.sh ${SERVICE_TO_WAIT_FOR}; fi && mvn spring-boot:run" ]
