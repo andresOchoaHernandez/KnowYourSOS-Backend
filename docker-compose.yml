@@ -6,6 +6,8 @@ services:
         args:
           SERVICE_NAME: ConfigurationServer
     container_name: knowyoursos-configurationserver
+    environment:
+      - SERVICE_TO_WAIT_FOR=None
     networks:
       - backend
   knowyoursos-eurekaserver:
@@ -60,6 +62,16 @@ services:
       - knowyoursos-eurekaserver
     environment:
       - SERVICE_TO_WAIT_FOR=knowyoursos-eurekaserver:8761
+    networks:
+      - backend
+  knowyoursos-sosdatabase:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: sosnumbers
+      POSTGRES_USER: sosmicroservice
+      POSTGRES_PASSWORD: TH1sI_sASecurePw0rD!
+    ports:
+      - "5432:5432"
     networks:
       - backend
 networks:
