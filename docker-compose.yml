@@ -7,7 +7,7 @@ services:
           SERVICE_NAME: ConfigurationServer
     container_name: knowyoursos-configurationserver
     environment:
-      - SERVICE_TO_WAIT_FOR=None
+      - SERVICE_TO_WAIT_FOR=${CONFIGURATIONSERVER_SERVICE_TO_WAIT_FOR_NAME}
     networks:
       - backend
   knowyoursos-eurekaserver:
@@ -18,7 +18,7 @@ services:
         SERVICE_NAME: EurekaServer
     container_name: knowyoursos-eurekaserver
     environment:
-      - SERVICE_TO_WAIT_FOR=knowyoursos-configurationserver:8888 
+      - SERVICE_TO_WAIT_FOR=${EUREKASERVER_SERVICE_TO_WAIT_FOR_NAME}:${EUREKASERVER_SERVICE_TO_WAIT_FOR_PORT}
     depends_on:
       - knowyoursos-configurationserver
     networks:
@@ -35,7 +35,7 @@ services:
     depends_on:
       - knowyoursos-eurekaserver
     environment:
-      - SERVICE_TO_WAIT_FOR=knowyoursos-eurekaserver:8761
+      - SERVICE_TO_WAIT_FOR=${APIGATEWAY_SERVICE_TO_WAIT_FOR_NAME}:${APIGATEWAY_SERVICE_TO_WAIT_FOR_PORT}
     networks:
       - backend
   knowyoursos-sosnumbermicroservice:
@@ -48,7 +48,7 @@ services:
     depends_on:
       - knowyoursos-eurekaserver
     environment:
-      - SERVICE_TO_WAIT_FOR=knowyoursos-eurekaserver:8761
+      - SERVICE_TO_WAIT_FOR=${SOSNUMBERSMICROSERVICE_SERVICE_TO_WAIT_FOR_NAME}:${SOSNUMBERSMICROSERVICE_SERVICE_TO_WAIT_FOR_PORT}
     networks:
       - backend
   knowyoursos-updatedbmicroservice:
@@ -61,15 +61,15 @@ services:
     depends_on:
       - knowyoursos-eurekaserver
     environment:
-      - SERVICE_TO_WAIT_FOR=knowyoursos-eurekaserver:8761
+      - SERVICE_TO_WAIT_FOR=${UPDATEDBMICROSERVICE_SERVICE_TO_WAIT_FOR_NAME}:${UPDATEDBMICROSERVICE_SERVICE_TO_WAIT_FOR_PORT}
     networks:
       - backend
   knowyoursos-sosdatabase:
     image: postgres:15
     environment:
-      POSTGRES_DB: sosnumbers
-      POSTGRES_USER: sosmicroservice
-      POSTGRES_PASSWORD: TH1sI_sASecurePw0rD!
+      POSTGRES_DB: ${SOSDATABASE_DB_NAME}
+      POSTGRES_USER: ${SOSDATABASE_DB_USERNAME}
+      POSTGRES_PASSWORD: ${SOSDATABASE_DB_PASSWORD}
     ports:
       - "5432:5432"
     networks:
